@@ -1,5 +1,3 @@
-您说得对！我重新优化了README，突出EXE文件的使用方式：
-
 # Factory Simulator - Crafting System Edition 🏭
 
 [中文](#中文) | [English](#english)
@@ -75,9 +73,6 @@
 git clone https://github.com/FI0m9ySans/Factory-Simulator.git
 cd Factory-Simulator
 
-# 安装依赖
-pip install -r requirements.txt
-
 # 运行游戏
 python Factory-Simulator_zh-cn.py
 ```
@@ -87,7 +82,6 @@ python Factory-Simulator_zh-cn.py
 Factory-Simulator/
 ├── 工厂模拟器.exe      # 主程序（Windows）
 ├── Factory-Simulator_zh-cn.py               # 源代码
-├── requirements.txt   # Python依赖
 └── README.md         # 说明文档
 ```
 
@@ -174,9 +168,6 @@ For developers or code modification:
 git clone https://github.com/FI0m9ySans/Factory-Simulator.git
 cd Factory-Simulator
 
-# Install dependencies
-pip install -r requirements.txt
-
 # Run the game
 python Factory-Simulator_En.py
 ```
@@ -186,7 +177,6 @@ python Factory-Simulator_En.py
 Factory-Simulator/
 ├── Factory_Simulator.exe  # Main program (Windows)
 ├── Factory-Simulator_En.py                  # Source code
-├── requirements.txt      # Python dependencies
 └── README.md            # Documentation
 ```
 
