@@ -807,7 +807,7 @@ class FactorySimulatorGUI:
         self.root.geometry("1200x800")
         
         # 创建工厂实例
-        self.factory = Factory("Efficient Factory", initial_balance=10000)
+        self.factory = Factory("Efficient Factory", initial_balance=240)
         self.setup_factory()
         
         # 当前模组
@@ -972,7 +972,7 @@ class FactorySimulatorGUI:
         self.setup_window()
         
         # 创建工厂实例
-        self.factory = Factory("Efficient Factory", initial_balance=10000)
+        self.factory = Factory("Efficient Factory", initial_balance=420)
         self.setup_factory()
         
         # 当前模组
