@@ -1,125 +1,244 @@
-工厂模拟器 - 合成系统版 游戏指引教学
-目录
-游戏概述
+# Factory Simulator - Crafting System Edition 🏭
 
-快速入门
+[中文](#中文) | [English](#english)
 
-界面介绍
+## 中文
 
-核心系统
+### 🎮 游戏简介
 
-4.1 生产线系统
+**工厂模拟器 - 合成系统版** 是一款深度模拟经营游戏，让您体验从零开始建立和管理现代化工厂的全过程。通过精细的生产线规划、工人管理、订单处理和创新的合成系统，打造属于您的工业帝国！
 
-4.2 合成站系统
+### ✨ 主要特性
 
-4.3 工人管理
+- **🏭 多层次生产系统** - 建立生产线和合成站，打造完整产业链
+- **👥 深度人员管理** - 雇佣、培训工人，优化生产效率
+- **💰 真实经济模拟** - 管理资金、订单和库存，实现利润最大化
+- **🔬 创新合成系统** - 通过合成创造高级产品和材料
+- **🎨 强大模组系统** - 内置模组制作器，无限扩展游戏内容
+- **🖥️ 自适应界面** - 支持多种分辨率，完美适配不同屏幕
 
-4.4 订单系统
+### 🚀 快速开始
 
-4.5 经济系统
+#### 系统要求
+- **操作系统**: Windows 7+/macOS 10.12+/Linux Ubuntu 16.04+
+- **处理器**: 双核 2.0 GHz 或更高
+- **内存**: 4 GB RAM
+- **存储**: 500 MB 可用空间
 
-模组系统
+#### 安装方法
 
-设置与自定义
+**方法一：从源码运行**
+```bash
+# 克隆仓库
+git clone https://github.com/FI0m9ySans/Factory-Simulator.git
+cd Factory-Simulator
 
-常见问题
+# 安装依赖
+pip install -r requirements.txt
 
-进阶技巧
+# 运行游戏
+python a.py
+```
 
-游戏概述
-工厂模拟器 - 合成系统版是一个模拟经营游戏，玩家需要管理一个工厂，包括生产线的建设、工人的分配、原材料的采购、产品的生产与销售，以及通过合成站进行更高级的合成。游戏的目标是通过有效的管理使工厂盈利并不断扩大规模。
+**方法二：下载可执行文件**
+1. 前往 [Releases 页面](https://github.com/FI0m9ySans/Factory-Simulator/releases)
+2. 下载对应平台的可执行文件
+3. 解压并运行
 
-快速入门
-开始新游戏：启动游戏后，选择“新游戏”即可开始。初始状态下，工厂已经设置了一些基本的生产线、合成站和工人。
+### 🎯 游戏玩法
 
-了解界面：游戏界面分为控制面板（左侧）和状态显示（右侧）。控制面板用于操作，状态显示用于查看当前工厂状态。
+#### 基础操作
+1. **分配工人**到生产线和合成站
+2. **购买原材料**维持生产
+3. **接受订单**获取收入
+4. **研发新技术**提升竞争力
 
-推进时间：使用时间控制按钮推进时间，观察生产进度。
+#### 进阶策略
+- 优化生产线布局
+- 平衡供需关系
+- 研发合成配方
+- 扩展生产规模
 
-完成订单：查看订单列表，确保按时完成订单以获得收入。
+### 📖 详细文档
 
-扩大生产：使用工厂管理按钮购买原材料、雇佣工人、添加生产线和合成站。
+- [完整游戏指南](docs/GAME_GUIDE.md) - 详细的玩法说明和策略指南
+- [模组制作教程](docs/MODDING_GUIDE.md) - 学习创建自定义内容
+- [技术文档](docs/TECHNICAL.md) - 开发者和技术爱好者参考
 
-界面介绍
-标题栏：显示游戏名称和当前工厂名称。
+### 🛠️ 开发相关
 
-菜单栏：包含文件、设置、模组等菜单。
+#### 项目结构
+```
+Factory-Simulator/
+├── a.py                 # 主程序文件
+├── requirements.txt     # Python依赖
+├── build.bat           # Windows打包脚本
+├── build.sh            # Linux/macOS打包脚本
+└── docs/               # 文档目录
+```
 
-控制面板：包含多个分组，如时间控制、自动模拟、工厂管理、生产线管理、合成站管理等。
+#### 构建说明
+```bash
+# Windows
+.\build.bat
 
-状态显示：以文本形式显示工厂的详细状态，包括资金、时间、生产线状态、合成站状态、工人状态、库存和订单。
+# Linux/macOS
+chmod +x build.sh
+./build.sh
+```
 
-事件日志：显示游戏中发生的事件，如生产完成、订单逾期等。
+### 🤝 贡献指南
 
-核心系统
-4.1 生产线系统
-分配工人：每条生产线需要分配一个工人才能运行。
+我们欢迎各种形式的贡献！请参阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
 
-分配产品：为生产线分配一个产品，该产品必须已经定义，并且有足够的原材料和组件。
+1. **报告问题** - 使用 [Issue 模板](.github/ISSUE_TEMPLATE.md)
+2. **提交功能请求** - 描述您想要的新功能
+3. **代码贡献** - 遵循我们的代码规范
+4. **文档改进** - 帮助完善文档和翻译
 
-生产进度：生产进度会随着时间推进，完成后产品会存入库存。
+### 📜 许可证
 
-4.2 合成站系统
-分配工人：每个合成站需要分配一个工人才能运行。
+本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
 
-分配配方：为合成站分配一个配方，可以是产品也可以是材料，但必须标记为可合成。
+### 📞 联系我们
 
-合成进度：合成进度随时间推进，完成后相应的产品/材料会存入库存。
+- **作者**: FI0m9ySans
+- **GitHub**: [@FI0m9ySans](https://github.com/FI0m9ySans)
+- **问题反馈**: [创建 Issue](https://github.com/FI0m9ySans/Factory-Simulator/issues)
 
-4.3 工人管理
-雇佣工人：可以雇佣新工人，需要指定姓名、技能等级和日薪。
+### 🙏 致谢
 
-技能等级：技能等级影响生产和合成效率，等级越高，效率越高。
+感谢所有为这个项目做出贡献的开发者们！特别感谢：
 
-分配工作：工人可以被分配到生产线或合成站，但同一时间只能在一个地方工作。
+- 测试人员们的宝贵反馈
+- 开源社区的优秀工具和库
+- 所有玩家的支持和建议
 
-4.4 订单系统
-创建订单：可以手动创建订单，指定产品、数量和交货天数。
+---
 
-订单完成：当库存中产品数量达到订单要求时，订单自动完成，并获得收入。
+## English
 
-订单逾期：如果订单超过截止日期未完成，则会标记为逾期，但不会获得收入。
+### 🎮 Game Introduction
 
-4.5 经济系统
-资金管理：通过完成订单和出售库存获得收入，通过购买原材料和支付工资产生支出。
+**Factory Simulator - Crafting System Edition** is an in-depth simulation management game that allows you to experience the entire process of building and managing a modern factory from scratch. Through detailed production line planning, worker management, order processing, and an innovative crafting system, build your own industrial empire!
 
-成本控制：注意原材料的采购成本和工人的工资，避免资金不足。
+### ✨ Key Features
 
-模组系统
-游戏内置模组制作器，允许玩家自定义游戏内容。
+- **🏭 Multi-level Production System** - Establish production lines and crafting stations to create a complete industrial chain
+- **👥 Deep Personnel Management** - Hire, train workers, and optimize production efficiency
+- **💰 Realistic Economic Simulation** - Manage funds, orders, and inventory to maximize profits
+- **🔬 Innovative Crafting System** - Create advanced products and materials through crafting
+- **🎨 Powerful Mod System** - Built-in mod creator for unlimited content expansion
+- **🖥️ Adaptive Interface** - Supports multiple resolutions, perfectly adapts to different screens
 
-创建模组：使用模组制作器可以定义新的原材料、产品、合成配方、工人和合成站。
+### 🚀 Quick Start
 
-导入/导出模组：可以将自定义的模组导出为文件，也可以导入他人制作的模组。
+#### System Requirements
+- **OS**: Windows 7+/macOS 10.12+/Linux Ubuntu 16.04+
+- **Processor**: Dual-core 2.0 GHz or higher
+- **Memory**: 4 GB RAM
+- **Storage**: 500 MB available space
 
-设置与自定义
-分辨率设置：游戏支持多种分辨率，可以在设置中更改。
+#### Installation Methods
 
-窗口模式：支持窗口模式和全屏模式，可以通过快捷键F11切换。
+**Method 1: Run from Source**
+```bash
+# Clone repository
+git clone https://github.com/FI0m9ySans/Factory-Simulator.git
+cd Factory-Simulator
 
-界面缩放：可以调整界面缩放因子，以适应不同分辨率和屏幕。
+# Install dependencies
+pip install -r requirements.txt
 
-常见问题
-为什么生产线不能分配产品？
+# Run the game
+python a.py
+```
 
-检查是否分配了工人。
+**Method 2: Download Executable**
+1. Go to [Releases page](https://github.com/FI0m9ySans/Factory-Simulator/releases)
+2. Download the executable for your platform
+3. Extract and run
 
-检查所需原材料和组件是否足够。
+### 🎯 Gameplay
 
-为什么合成站不能分配配方？
+#### Basic Operations
+1. **Assign workers** to production lines and crafting stations
+2. **Purchase raw materials** to maintain production
+3. **Accept orders** to generate income
+4. **Research new technologies** to enhance competitiveness
 
-检查是否分配了工人。
+#### Advanced Strategies
+- Optimize production line layout
+- Balance supply and demand
+- Develop crafting recipes
+- Expand production scale
 
-检查配方是否标记为可合成。
+### 📖 Documentation
 
-检查所需原材料和组件是否足够。
+- [Complete Game Guide](docs/GAME_GUIDE.md) - Detailed gameplay instructions and strategy guide
+- [Modding Tutorial](docs/MODDING_GUIDE.md) - Learn to create custom content
+- [Technical Documentation](docs/TECHNICAL.md) - Reference for developers and tech enthusiasts
 
-如何增加资金？
+### 🛠️ Development
 
-完成订单。
+#### Project Structure
+```
+Factory-Simulator/
+├── a.py                 # Main program file
+├── requirements.txt     # Python dependencies
+├── build.bat           # Windows build script
+├── build.sh            # Linux/macOS build script
+└── docs/               # Documentation directory
+```
 
-出售库存产品。
+#### Build Instructions
+```bash
+# Windows
+.\build.bat
 
-如何解雇工人？
+# Linux/macOS
+chmod +x build.sh
+./build.sh
+```
 
-目前版本不支持解雇工人，但可以通过不分配工作来节省工资（注意：工人即使不工作也会支付日薪）。
+### 🤝 Contributing
+
+We welcome all forms of contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+1. **Report Issues** - Use [Issue Template](.github/ISSUE_TEMPLATE.md)
+2. **Submit Feature Requests** - Describe the new features you want
+3. **Code Contributions** - Follow our coding standards
+4. **Documentation Improvements** - Help improve documentation and translations
+
+### 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+### 📞 Contact Us
+
+- **Author**: FI0m9ySans
+- **GitHub**: [@FI0m9ySans](https://github.com/FI0m9ySans)
+- **Issue Reporting**: [Create an Issue](https://github.com/FI0m9ySans/Factory-Simulator/issues)
+
+### 🙏 Acknowledgments
+
+Thanks to all developers who contributed to this project! Special thanks to:
+
+- Valuable feedback from our testers
+- Excellent tools and libraries from the open-source community
+- Support and suggestions from all players
+
+---
+
+## 📊 Project Status
+
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/FI0m9ySans/Factory-Simulator)
+![GitHub](https://img.shields.io/github/license/FI0m9ySans/Factory-Simulator)
+![GitHub issues](https://img.shields.io/github/issues/FI0m9ySans/Factory-Simulator)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/FI0m9ySans/Factory-Simulator)
+
+**⭐ 如果这个项目对您有帮助，请给我们一个星标！**
+
+---
+
+*最后更新: 2024年 | 版本: v1.0.0*
