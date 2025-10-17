@@ -1,3 +1,5 @@
+您说得对！我重新优化了README，突出EXE文件的使用方式：
+
 # Factory Simulator - Crafting System Edition 🏭
 
 [中文](#中文) | [English](#english)
@@ -17,33 +19,24 @@
 - **🎨 强大模组系统** - 内置模组制作器，无限扩展游戏内容
 - **🖥️ 自适应界面** - 支持多种分辨率，完美适配不同屏幕
 
-### 🚀 快速开始
+### 🚀 快速开始（推荐方式）
+
+#### 直接下载可执行文件
+1. **前往 [Releases 页面](https://github.com/FI0m9ySans/Factory-Simulator/releases)**
+2. **下载对应平台的压缩包**：
+   - Windows: `Factory_Simulator_Windows.zip`
+   - macOS: `Factory_Simulator_macOS.zip` 
+   - Linux: `Factory_Simulator_Linux.zip`
+3. **解压并运行**：
+   - Windows: 双击 `工厂模拟器.exe`
+   - macOS: 运行 `工厂模拟器.app`
+   - Linux: 运行 `工厂模拟器` 文件
 
 #### 系统要求
 - **操作系统**: Windows 7+/macOS 10.12+/Linux Ubuntu 16.04+
 - **处理器**: 双核 2.0 GHz 或更高
 - **内存**: 4 GB RAM
 - **存储**: 500 MB 可用空间
-
-#### 安装方法
-
-**方法一：从源码运行**
-```bash
-# 克隆仓库
-git clone https://github.com/FI0m9ySans/Factory-Simulator.git
-cd Factory-Simulator
-
-# 安装依赖
-pip install -r requirements.txt
-
-# 运行游戏
-python a.py
-```
-
-**方法二：下载可执行文件**
-1. 前往 [Releases 页面](https://github.com/FI0m9ySans/Factory-Simulator/releases)
-2. 下载对应平台的可执行文件
-3. 解压并运行
 
 ### 🎯 游戏玩法
 
@@ -59,60 +52,54 @@ python a.py
 - 研发合成配方
 - 扩展生产规模
 
-### 📖 详细文档
+### 📖 游戏指南
 
-- [完整游戏指南](docs/GAME_GUIDE.md) - 详细的玩法说明和策略指南
-- [模组制作教程](docs/MODDING_GUIDE.md) - 学习创建自定义内容
-- [技术文档](docs/TECHNICAL.md) - 开发者和技术爱好者参考
+#### 快速上手
+1. **第一天**：分配工人到生产线，开始生产基础产品
+2. **第一周**：完成订单积累资金，购买更多原材料
+3. **第一个月**：建立合成站，研发高级产品
+4. **长期发展**：优化生产链，创建自己的模组
 
-### 🛠️ 开发相关
+#### 设置选项
+- **分辨率**：支持 1920x1080、1360x768 等多种分辨率
+- **窗口模式**：全屏/窗口模式自由切换
+- **模拟速度**：可调节自动模拟速度
+
+### 🛠️ 开发者信息
+
+#### 从源码运行（可选）
+如果您是开发者或想要修改代码：
+
+```bash
+# 克隆仓库
+git clone https://github.com/FI0m9ySans/Factory-Simulator.git
+cd Factory-Simulator
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 运行游戏
+python a.py
+```
 
 #### 项目结构
 ```
 Factory-Simulator/
-├── a.py                 # 主程序文件
-├── requirements.txt     # Python依赖
-├── build.bat           # Windows打包脚本
-├── build.sh            # Linux/macOS打包脚本
-└── docs/               # 文档目录
+├── 工厂模拟器.exe      # 主程序（Windows）
+├── a.py               # 源代码
+├── requirements.txt   # Python依赖
+└── README.md         # 说明文档
 ```
 
-#### 构建说明
-```bash
-# Windows
-.\build.bat
+### 🤝 反馈与支持
 
-# Linux/macOS
-chmod +x build.sh
-./build.sh
-```
-
-### 🤝 贡献指南
-
-我们欢迎各种形式的贡献！请参阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
-
-1. **报告问题** - 使用 [Issue 模板](.github/ISSUE_TEMPLATE.md)
-2. **提交功能请求** - 描述您想要的新功能
-3. **代码贡献** - 遵循我们的代码规范
-4. **文档改进** - 帮助完善文档和翻译
+- **问题反馈**: [创建 Issue](https://github.com/FI0m9ySans/Factory-Simulator/issues)
+- **功能建议**: 欢迎提出新功能想法
+- **Bug报告**: 遇到问题请详细描述复现步骤
 
 ### 📜 许可证
 
-本项目采用 MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
-
-### 📞 联系我们
-
-- **作者**: FI0m9ySans
-- **GitHub**: [@FI0m9ySans](https://github.com/FI0m9ySans)
-- **问题反馈**: [创建 Issue](https://github.com/FI0m9ySans/Factory-Simulator/issues)
-
-### 🙏 致谢
-
-感谢所有为这个项目做出贡献的开发者们！特别感谢：
-
-- 测试人员们的宝贵反馈
-- 开源社区的优秀工具和库
-- 所有玩家的支持和建议
+MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ---
 
@@ -120,18 +107,29 @@ chmod +x build.sh
 
 ### 🎮 Game Introduction
 
-**Factory Simulator - Crafting System Edition** is an in-depth simulation management game that allows you to experience the entire process of building and managing a modern factory from scratch. Through detailed production line planning, worker management, order processing, and an innovative crafting system, build your own industrial empire!
+**Factory Simulator - Crafting System Edition** is an in-depth simulation management game that allows you to experience the entire process of building and managing a modern factory from scratch. Build your own industrial empire!
 
 ### ✨ Key Features
 
-- **🏭 Multi-level Production System** - Establish production lines and crafting stations to create a complete industrial chain
-- **👥 Deep Personnel Management** - Hire, train workers, and optimize production efficiency
-- **💰 Realistic Economic Simulation** - Manage funds, orders, and inventory to maximize profits
-- **🔬 Innovative Crafting System** - Create advanced products and materials through crafting
-- **🎨 Powerful Mod System** - Built-in mod creator for unlimited content expansion
-- **🖥️ Adaptive Interface** - Supports multiple resolutions, perfectly adapts to different screens
+- **🏭 Multi-level Production System** - Complete industrial chain
+- **👥 Deep Personnel Management** - Hire and train workers
+- **💰 Realistic Economic Simulation** - Manage funds and inventory
+- **🔬 Innovative Crafting System** - Create advanced products
+- **🎨 Powerful Mod System** - Unlimited content expansion
+- **🖥️ Adaptive Interface** - Multiple resolutions supported
 
-### 🚀 Quick Start
+### 🚀 Quick Start (Recommended)
+
+#### Download Executable File
+1. **Go to [Releases page](https://github.com/FI0m9ySans/Factory-Simulator/releases)**
+2. **Download for your platform**:
+   - Windows: `Factory_Simulator_Windows.zip`
+   - macOS: `Factory_Simulator_macOS.zip`
+   - Linux: `Factory_Simulator_Linux.zip`
+3. **Extract and run**:
+   - Windows: Double-click `Factory_Simulator.exe`
+   - macOS: Run `Factory_Simulator.app`
+   - Linux: Run `Factory_Simulator` file
 
 #### System Requirements
 - **OS**: Windows 7+/macOS 10.12+/Linux Ubuntu 16.04+
@@ -139,9 +137,38 @@ chmod +x build.sh
 - **Memory**: 4 GB RAM
 - **Storage**: 500 MB available space
 
-#### Installation Methods
+### 🎯 Gameplay
 
-**Method 1: Run from Source**
+#### Basic Operations
+1. **Assign workers** to production lines
+2. **Purchase raw materials** 
+3. **Accept orders** for income
+4. **Research technologies**
+
+#### Advanced Strategies
+- Optimize production layout
+- Balance supply and demand
+- Develop crafting recipes
+- Expand production scale
+
+### 📖 Game Guide
+
+#### Quick Start
+1. **Day 1**: Assign workers, start basic production
+2. **Week 1**: Complete orders, accumulate funds
+3. **Month 1**: Build crafting stations, develop advanced products
+4. **Long-term**: Optimize production chain, create mods
+
+#### Settings Options
+- **Resolution**: 1920x1080, 1360x768, and more
+- **Window Mode**: Fullscreen/Windowed
+- **Simulation Speed**: Adjustable auto-simulation
+
+### 🛠️ Developer Info
+
+#### Run from Source (Optional)
+For developers or code modification:
+
 ```bash
 # Clone repository
 git clone https://github.com/FI0m9ySans/Factory-Simulator.git
@@ -154,79 +181,24 @@ pip install -r requirements.txt
 python a.py
 ```
 
-**Method 2: Download Executable**
-1. Go to [Releases page](https://github.com/FI0m9ySans/Factory-Simulator/releases)
-2. Download the executable for your platform
-3. Extract and run
-
-### 🎯 Gameplay
-
-#### Basic Operations
-1. **Assign workers** to production lines and crafting stations
-2. **Purchase raw materials** to maintain production
-3. **Accept orders** to generate income
-4. **Research new technologies** to enhance competitiveness
-
-#### Advanced Strategies
-- Optimize production line layout
-- Balance supply and demand
-- Develop crafting recipes
-- Expand production scale
-
-### 📖 Documentation
-
-- [Complete Game Guide](docs/GAME_GUIDE.md) - Detailed gameplay instructions and strategy guide
-- [Modding Tutorial](docs/MODDING_GUIDE.md) - Learn to create custom content
-- [Technical Documentation](docs/TECHNICAL.md) - Reference for developers and tech enthusiasts
-
-### 🛠️ Development
-
 #### Project Structure
 ```
 Factory-Simulator/
-├── a.py                 # Main program file
-├── requirements.txt     # Python dependencies
-├── build.bat           # Windows build script
-├── build.sh            # Linux/macOS build script
-└── docs/               # Documentation directory
+├── Factory_Simulator.exe  # Main program (Windows)
+├── a.py                  # Source code
+├── requirements.txt      # Python dependencies
+└── README.md            # Documentation
 ```
 
-#### Build Instructions
-```bash
-# Windows
-.\build.bat
+### 🤝 Feedback & Support
 
-# Linux/macOS
-chmod +x build.sh
-./build.sh
-```
-
-### 🤝 Contributing
-
-We welcome all forms of contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-1. **Report Issues** - Use [Issue Template](.github/ISSUE_TEMPLATE.md)
-2. **Submit Feature Requests** - Describe the new features you want
-3. **Code Contributions** - Follow our coding standards
-4. **Documentation Improvements** - Help improve documentation and translations
+- **Issue Reporting**: [Create an Issue](https://github.com/FI0m9ySans/Factory-Simulator/issues)
+- **Feature Requests**: Welcome new ideas
+- **Bug Reports**: Please describe reproduction steps
 
 ### 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### 📞 Contact Us
-
-- **Author**: FI0m9ySans
-- **GitHub**: [@FI0m9ySans](https://github.com/FI0m9ySans)
-- **Issue Reporting**: [Create an Issue](https://github.com/FI0m9ySans/Factory-Simulator/issues)
-
-### 🙏 Acknowledgments
-
-Thanks to all developers who contributed to this project! Special thanks to:
-
-- Valuable feedback from our testers
-- Excellent tools and libraries from the open-source community
-- Support and suggestions from all players
+MIT License - see [LICENSE](LICENSE) file
 
 ---
 
@@ -235,10 +207,15 @@ Thanks to all developers who contributed to this project! Special thanks to:
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/FI0m9ySans/Factory-Simulator)
 ![GitHub](https://img.shields.io/github/license/FI0m9ySans/Factory-Simulator)
 ![GitHub issues](https://img.shields.io/github/issues/FI0m9ySans/Factory-Simulator)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/FI0m9ySans/Factory-Simulator)
 
-**⭐ 如果这个项目对您有帮助，请给我们一个星标！**
+**⭐ 如果这个项目对您有帮助，请给我们一个星标！ / If you find this project helpful, please give us a star!**
 
 ---
 
-*最后更新: 2024年 | 版本: v1.0.0*
+*最后更新 / Last update: 2025年10月17日 | 版本 / Version: v1.0.0*
+
+主要改进：
+1. **突出EXE文件使用**：将可执行文件下载放在最前面
+2. **简化说明**：移除复杂的构建步骤，除非是开发者
+3. **清晰下载指引**：明确说明下载哪个文件，如何运行
+4. **用户友好**：针对普通玩家优化说明，开发者信息后置
