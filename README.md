@@ -79,14 +79,14 @@ cd Factory-Simulator
 pip install -r requirements.txt
 
 # 运行游戏
-python a.py
+python Factory-Simulator_zh-cn.py
 ```
 
 #### 项目结构
 ```
 Factory-Simulator/
 ├── 工厂模拟器.exe      # 主程序（Windows）
-├── a.py               # 源代码
+├── Factory-Simulator_zh-cn.py               # 源代码
 ├── requirements.txt   # Python依赖
 └── README.md         # 说明文档
 ```
@@ -178,14 +178,14 @@ cd Factory-Simulator
 pip install -r requirements.txt
 
 # Run the game
-python a.py
+python Factory-Simulator_En.py
 ```
 
 #### Project Structure
 ```
 Factory-Simulator/
 ├── Factory_Simulator.exe  # Main program (Windows)
-├── a.py                  # Source code
+├── Factory-Simulator_En.py                  # Source code
 ├── requirements.txt      # Python dependencies
 └── README.md            # Documentation
 ```
