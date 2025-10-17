@@ -348,7 +348,7 @@ class Mod:
         self.products = []
         self.materials = []
         self.initial_workers = []
-        self.initial_balance = 10000
+        self.initial_balance = 0
         self.initial_materials = {}
         self.crafting_stations = []
         
@@ -376,7 +376,7 @@ class Mod:
             author=data.get("author", ""),
             version=data.get("version", "1.0")
         )
-        mod.initial_balance = data.get("initial_balance", 10000)
+        mod.initial_balance = data.get("initial_balance", 0)
         mod.initial_materials = data.get("initial_materials", {})
         
         # 加载原材料
@@ -807,7 +807,7 @@ class FactorySimulatorGUI:
         self.root.geometry("1200x800")
         
         # 创建工厂实例
-        self.factory = Factory("高效加工厂", initial_balance=10000)
+        self.factory = Factory("高效加工厂", initial_balance=240)
         self.setup_factory()
         
         # 当前模组
@@ -972,7 +972,7 @@ class FactorySimulatorGUI:
         self.setup_window()
         
         # 创建工厂实例
-        self.factory = Factory("高效加工厂", initial_balance=10000)
+        self.factory = Factory("高效加工厂", initial_balance=420)
         self.setup_factory()
         
         # 当前模组
@@ -1310,7 +1310,7 @@ class FactorySimulatorGUI:
         mod_frame = ttk.LabelFrame(self.scrollable_frame, text="当前模组", padding="5")
         mod_frame.pack(fill=tk.X, pady=(0, 10))
         
-        self.mod_label = ttk.Label(mod_frame, text="默认模组")
+        self.mod_label = ttk.Label(mod_frame, text="")
         self.mod_label.pack(anchor=tk.W, padx=5, pady=2)
         
         # 时间控制
@@ -1992,7 +1992,7 @@ class ModCreator:
         ttk.Entry(info_frame, textvariable=self.version_var).grid(row=3, column=1, sticky=(tk.W, tk.E), padx=5, pady=5)
         
         ttk.Label(info_frame, text="初始资金:").grid(row=4, column=0, sticky=tk.W, padx=5, pady=5)
-        self.balance_var = tk.StringVar(value="10000")
+        self.balance_var = tk.StringVar(value="0")
         ttk.Entry(info_frame, textvariable=self.balance_var).grid(row=4, column=1, sticky=(tk.W, tk.E), padx=5, pady=5)
         
         # 合成站设置
