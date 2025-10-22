@@ -799,29 +799,308 @@ class Factory:
         for station_data in mod.crafting_stations:
             self.add_crafting_station(station_data["name"], station_data["capacity"])
 
-class FactorySimulatorGUI:
-    """工厂模拟器GUI"""
-    def __init__(self, root):
-        self.root = root
-        self.root.title("加工厂模拟器 - 合成系统版")
-        self.root.geometry("1200x800")
+class FactoryAI:
+    """AI玩家类，用于自动管理工厂"""
+    
+    def __init__(self, app):
+        self.app = app
+        self.factory = app.factory
+        self.running = False
+        self.strategy = "balanced"  # balanced, aggressive, conservative
+        self.last_decision_day = 0
+        self.decision_interval = 1  # 决策间隔（小时）
+        self.last_decision_time = self.factory.current_time
         
-        # 创建工厂实例
-        self.factory = Factory("高效加工厂", initial_balance=240)
-        self.setup_factory()
+    def start(self):
+        """启动AI玩家"""
+        self.running = True
+        self.last_decision_time = self.factory.current_time
+        self.app.log_event("AI玩家已启动")
+        # 立即执行一次决策
+        self.make_continuous_decisions()
         
-        # 当前模组
-        self.current_mod = None
+    def stop(self):
+        """停止AI玩家"""
+        self.running = False
+        self.app.log_event("AI玩家已停止")
         
-        # 是否正在运行模拟
-        self.simulation_running = False
+    def make_continuous_decisions(self):
+        """持续做出决策"""
+        if not self.running:
+            return
+            
+        current_time = self.factory.current_time
+        time_diff = (current_time - self.last_decision_time).total_seconds() / 3600  # 转换为小时
         
-        # 创建GUI
-        self.create_widgets()
+        # 每过一定时间间隔就做决策
+        if time_diff >= self.decision_interval:
+            self.last_decision_time = current_time
+            self.app.log_event(f"AI玩家在 {current_time.strftime('%H:%M')} 做出决策")
+            
+            try:
+                # 根据策略做出决策
+                if self.strategy == "balanced":
+                    self.balanced_strategy()
+                elif self.strategy == "aggressive":
+                    self.aggressive_strategy()
+                elif self.strategy == "conservative":
+                    self.conservative_strategy()
+                    
+                self.app.update_display()
+            except Exception as e:
+                self.app.log_event(f"AI决策出错: {str(e)}")
         
-        # 启动定时更新
-        self.update_display()
+        # 安排下一次决策检查
+        if self.running:
+            # 每5秒检查一次是否需要做决策
+            self.app.root.after(5000, self.make_continuous_decisions)
         
+    def make_daily_decisions(self):
+        """每天做出决策（兼容原有接口）"""
+        if not self.running or self.factory.day <= self.last_decision_day:
+            return
+            
+        self.last_decision_day = self.factory.day
+        self.app.log_event(f"AI玩家在第 {self.factory.day} 天做出决策")
+        
+        try:
+            # 根据策略做出决策
+            if self.strategy == "balanced":
+                self.balanced_strategy()
+            elif self.strategy == "aggressive":
+                self.aggressive_strategy()
+            elif self.strategy == "conservative":
+                self.conservative_strategy()
+                
+            self.app.update_display()
+            self.app.log_event("AI决策执行完成")
+        except Exception as e:
+            self.app.log_event(f"AI决策出错: {str(e)}")
+        
+    def balanced_strategy(self):
+        """平衡发展策略"""
+        self.app.log_event("执行平衡发展策略")
+        
+        # 1. 分配工人到空闲的生产线
+        self.assign_workers_to_lines()
+        
+        # 2. 分配产品到有工人的生产线
+        self.assign_products_to_lines()
+        
+        # 3. 分配工人到空闲的合成站
+        self.assign_workers_to_stations()
+        
+        # 4. 为合成站分配配方
+        self.assign_recipes_to_stations()
+        
+        # 5. 购买必要的原材料
+        self.purchase_needed_materials()
+        
+        # 6. 创建一些订单
+        if len(self.factory.orders) < 2:
+            self.create_random_orders()
+            
+    def aggressive_strategy(self):
+        """积极扩张策略"""
+        self.app.log_event("执行积极扩张策略")
+        
+        # 1. 尽可能多地雇佣工人
+        if len(self.factory.workers) < 5 and self.factory.balance > 500:
+            self.hire_worker(f"AI工人{len(self.factory.workers)+1}", 3, 120)
+            
+        # 2. 添加更多生产线
+        if len(self.factory.production_lines) < 4 and self.factory.balance > 1000:
+            self.factory.add_production_line(10)
+            self.app.log_event("AI添加了新的生产线")
+            self.app.update_progress_bars()
+            
+        # 3. 添加更多合成站
+        if len(self.factory.crafting_stations) < 3 and self.factory.balance > 800:
+            self.factory.add_crafting_station("AI合成台", 5)
+            self.app.log_event("AI添加了新的合成站")
+            self.app.update_progress_bars()
+            
+        # 4. 平衡策略的基础决策
+        self.balanced_strategy()
+        
+    def conservative_strategy(self):
+        """保守经营策略"""
+        self.app.log_event("执行保守经营策略")
+        
+        # 只确保基本运营
+        self.assign_workers_to_lines()
+        self.assign_products_to_lines()
+        
+        # 只购买最必要的原材料
+        critical_materials = ["木材", "金属", "螺丝"]
+        for material in critical_materials:
+            if material in self.factory.materials:
+                current_stock = self.factory.material_inventory.get(material, 0)
+                if current_stock < 50 and self.factory.balance > 100:
+                    # 购买足够的材料
+                    needed = 100 - current_stock
+                    affordable = min(needed, int(self.factory.balance / self.factory.materials[material].cost / 2))
+                    if affordable > 0:
+                        success, message = self.factory.purchase_material(material, affordable)
+                        if success:
+                            self.app.log_event(message)
+                
+    def assign_workers_to_lines(self):
+        """分配工人到生产线"""
+        available_workers = [w for w in self.factory.workers if not w.is_working]
+        unstaffed_lines = [l for l in self.factory.production_lines if not l.assigned_worker]
+        
+        for worker, line in zip(available_workers, unstaffed_lines):
+            success, message = self.factory.assign_worker_to_line(worker.name, line.line_id)
+            if success:
+                self.app.log_event(f"AI将 {worker.name} 分配到生产线 {line.line_id}")
+                
+    def assign_workers_to_stations(self):
+        """分配工人到合成站"""
+        available_workers = [w for w in self.factory.workers if not w.is_working]
+        unstaffed_stations = [s for s in self.factory.crafting_stations if not s.assigned_worker]
+        
+        for worker, station in zip(available_workers, unstaffed_stations):
+            success, message = self.factory.assign_worker_to_station(worker.name, station.station_id)
+            if success:
+                self.app.log_event(f"AI将 {worker.name} 分配到合成站 {station.station_id}")
+                
+    def assign_products_to_lines(self):
+        """分配产品到生产线"""
+        staffed_lines = [l for l in self.factory.production_lines if l.assigned_worker and not l.current_product]
+        
+        for line in staffed_lines:
+            # 尝试分配不同的产品
+            for product_name, product in self.factory.products.items():
+                can_produce = True
+                
+                # 检查原材料是否足够
+                for material, quantity in product.materials_required.items():
+                    if material not in self.factory.material_inventory or self.factory.material_inventory[material] < quantity:
+                        can_produce = False
+                        break
+                        
+                # 检查所需产品是否足够
+                for prod_req, quantity in product.products_required.items():
+                    if prod_req not in self.factory.product_inventory or self.factory.product_inventory[prod_req] < quantity:
+                        can_produce = False
+                        break
+                        
+                if can_produce:
+                    success, message = self.factory.assign_product_to_line(product_name, line.line_id)
+                    if success:
+                        self.app.log_event(f"AI在生产线 {line.line_id} 开始生产 {product_name}")
+                        break
+                        
+    def assign_recipes_to_stations(self):
+        """为合成站分配配方"""
+        staffed_stations = [s for s in self.factory.crafting_stations if s.assigned_worker and not s.current_recipe]
+        
+        for station in staffed_stations:
+            # 尝试分配可合成的产品
+            for product_name, product in self.factory.products.items():
+                if product.is_craftable:
+                    can_craft = True
+                    
+                    # 检查原材料是否足够
+                    for material, quantity in product.materials_required.items():
+                        if material not in self.factory.material_inventory or self.factory.material_inventory[material] < quantity:
+                            can_craft = False
+                            break
+                            
+                    # 检查所需产品是否足够
+                    for prod_req, quantity in product.products_required.items():
+                        if prod_req not in self.factory.product_inventory or self.factory.product_inventory[prod_req] < quantity:
+                            can_craft = False
+                            break
+                            
+                    if can_craft:
+                        success, message = self.factory.assign_recipe_to_station(product_name, True, station.station_id)
+                        if success:
+                            self.app.log_event(f"AI在合成站 {station.station_id} 开始合成 {product_name}")
+                            break
+                    
+    def purchase_needed_materials(self):
+        """购买需要的原材料"""
+        for material_name, material in self.factory.materials.items():
+            current_stock = self.factory.material_inventory.get(material_name, 0)
+            
+            # 如果库存低于阈值且资金充足，就购买
+            if current_stock < 100 and self.factory.balance > material.cost * 50:
+                quantity = min(200, int(self.factory.balance / material.cost / 2))
+                success, message = self.factory.purchase_material(material_name, quantity)
+                if success:
+                    self.app.log_event(f"AI购买了 {quantity} 单位 {material_name}")
+                    
+    def create_random_orders(self):
+        """创建随机订单"""
+        import random
+        available_products = list(self.factory.products.keys())
+        if available_products:
+            product = random.choice(available_products)
+            quantity = random.randint(3, 10)
+            days = random.randint(2, 5)
+            
+            order, message = self.factory.create_order(product, quantity, days)
+            if order:
+                self.app.log_event(f"AI创建了订单: {product} x{quantity}, {days}天内交货")
+                
+    def hire_worker(self, name, skill_level, salary):
+        """雇佣工人"""
+        if self.factory.balance >= salary:
+            worker = self.factory.hire_worker(name, skill_level, salary)
+            self.app.log_event(f"AI雇佣了工人 {name}")
+            return worker
+        return None
+        
+    def analyze_factory(self):
+        """分析工厂状态"""
+        analysis = "=== AI分析报告 ===\n\n"
+        
+        # 资金分析
+        analysis += f"资金状况: ¥{self.factory.balance}\n"
+        if self.factory.balance < 200:
+            analysis += "警告: 资金不足!\n"
+        elif self.factory.balance > 1000:
+            analysis += "良好: 资金充足\n"
+        else:
+            analysis += "正常: 资金状况良好\n"
+            
+        analysis += "\n"
+        
+        # 生产线分析
+        active_lines = sum(1 for line in self.factory.production_lines if line.is_active)
+        total_lines = len(self.factory.production_lines)
+        analysis += f"生产线: {active_lines}/{total_lines} 运行中\n"
+        
+        if active_lines < total_lines:
+            analysis += "建议: 分配更多工人到生产线\n"
+            
+        analysis += "\n"
+        
+        # 库存分析
+        low_stock_materials = []
+        for material, quantity in self.factory.material_inventory.items():
+            if quantity < 50:
+                low_stock_materials.append(material)
+                
+        if low_stock_materials:
+            analysis += f"低库存原材料: {', '.join(low_stock_materials)}\n"
+            analysis += "建议: 补充库存\n"
+        else:
+            analysis += "原材料库存: 充足\n"
+            
+        analysis += "\n"
+        
+        # 订单分析
+        active_orders = sum(1 for order in self.factory.orders if not order.is_completed)
+        analysis += f"进行中订单: {active_orders}\n"
+        
+        if active_orders < 2:
+            analysis += "建议: 创建更多订单\n"
+            
+        return analysis
+
 class SettingsDialog:
     """设置对话框"""
     def __init__(self, parent, app):
@@ -980,13 +1259,52 @@ class FactorySimulatorGUI:
         
         # 是否正在运行模拟
         self.simulation_running = False
+
+        # 创建AI玩家
+        self.ai_player = FactoryAI(self)
         
         # 创建GUI
         self.create_widgets()
         
         # 启动定时更新
         self.update_display()
-        
+
+    def check_ai_decision(self):
+        """检查并执行AI决策"""
+        if hasattr(self, 'ai_player') and self.ai_player.running:
+            self.ai_player.make_daily_decisions()
+
+    def toggle_ai_player(self):
+        """切换AI玩家运行状态"""
+        if self.ai_player.running:
+            self.ai_player.stop()
+            self.ai_start_button.config(text="启动AI玩家")
+            self.ai_status_label.config(text="AI状态: 已停止", foreground="red")
+        else:
+            self.ai_player.strategy = self.ai_strategy_var.get()
+            self.ai_player.start()
+            self.ai_start_button.config(text="停止AI玩家")
+            self.ai_status_label.config(text="AI状态: 运行中", foreground="green")
+
+    def on_ai_strategy_change(self):
+        """AI策略改变时的回调"""
+        if self.ai_player.running:
+            self.ai_player.strategy = self.ai_strategy_var.get()
+            self.log_event(f"AI策略已切换为: {self.ai_strategy_var.get()}")
+
+    def ai_single_step(self):
+        """AI单步执行"""
+        if not self.ai_player.running:
+            self.ai_player.strategy = self.ai_strategy_var.get()
+            self.ai_player.make_daily_decisions()
+            self.update_display()
+            self.log_event("AI执行了单步决策")
+
+    def show_ai_analysis(self):
+        """显示AI分析"""
+        analysis = self.ai_player.analyze_factory()
+        messagebox.showinfo("AI分析报告", analysis)        
+
     def setup_window(self):
         """设置窗口属性"""
         # 获取当前分辨率设置
@@ -1095,11 +1413,14 @@ class FactorySimulatorGUI:
         self.factory.add_crafting_station("高级合成台", capacity=3)
         
         # 雇佣工人
+        self.factory.hire_worker("工人A", 3, 100)
+        self.factory.hire_worker("工人B", 2, 80)
+        self.factory.hire_worker("工人C", 4, 120)
+        self.factory.hire_worker("工人D", 3, 100)
         
         # 分配工人到生产线和合成站
         
         # 创建订单
-
         
         # 购买更多原材料
         self.factory.purchase_material("木材", 200)
@@ -1306,6 +1627,41 @@ class FactorySimulatorGUI:
         canvas.pack(side="left", fill="both", expand=True)
         scrollbar.pack(side="right", fill="y")
         
+        # ===== 添加AI控制面板 =====
+        ai_frame = ttk.LabelFrame(self.scrollable_frame, text="AI玩家控制", padding="10")
+        ai_frame.pack(fill=tk.X, pady=(0, 10))
+        
+        # 策略选择
+        strategy_frame = ttk.Frame(ai_frame)
+        strategy_frame.pack(fill=tk.X, pady=5)
+        
+        ttk.Label(strategy_frame, text="AI策略:").pack(side=tk.LEFT)
+        
+        self.ai_strategy_var = tk.StringVar(value="balanced")
+        strategies = [("平衡发展", "balanced"), ("积极扩张", "aggressive"), ("保守经营", "conservative")]
+        
+        for text, value in strategies:
+            ttk.Radiobutton(strategy_frame, text=text, variable=self.ai_strategy_var, 
+                       value=value, command=self.on_ai_strategy_change).pack(side=tk.LEFT, padx=10)
+    
+        # 控制按钮
+        button_frame = ttk.Frame(ai_frame)
+        button_frame.pack(fill=tk.X, pady=5)
+        
+        self.ai_start_button = ttk.Button(button_frame, text="启动AI玩家", command=self.toggle_ai_player)
+        self.ai_start_button.pack(side=tk.LEFT, padx=5)
+        
+        ttk.Button(button_frame, text="单步执行", command=self.ai_single_step).pack(side=tk.LEFT, padx=5)
+        ttk.Button(button_frame, text="AI分析", command=self.show_ai_analysis).pack(side=tk.LEFT, padx=5)
+    
+        # 状态显示
+        status_frame = ttk.Frame(ai_frame)
+        status_frame.pack(fill=tk.X, pady=5)
+        
+        self.ai_status_label = ttk.Label(status_frame, text="AI状态: 未启动", foreground="red")
+        self.ai_status_label.pack(side=tk.LEFT)
+        # ===== AI控制面板结束 =====
+    
         # 模组信息
         mod_frame = ttk.LabelFrame(self.scrollable_frame, text="当前模组", padding="5")
         mod_frame.pack(fill=tk.X, pady=(0, 10))
@@ -1451,6 +1807,9 @@ class FactorySimulatorGUI:
         for order_id in overdue_orders:
             self.log_event(f"警告: 订单 {order_id} 已逾期!")
             
+        # 检查AI决策
+        self.check_ai_decision()
+            
         self.update_display()
     
     def advance_eight_hours(self):
@@ -1468,6 +1827,9 @@ class FactorySimulatorGUI:
             for order_id in overdue_orders:
                 self.log_event(f"警告: 订单 {order_id} 已逾期!")
                 
+        # 检查AI决策
+        self.check_ai_decision()
+                
         self.update_display()
     
     def next_day(self):
@@ -1475,6 +1837,10 @@ class FactorySimulatorGUI:
         success, message, daily_profit = self.factory.next_day()
         self.log_event(message)
         self.log_event(f"昨日利润: ¥{daily_profit}")
+        
+        # 触发AI决策
+        self.check_ai_decision()
+        
         self.update_display()
     
     def toggle_auto_simulation(self):
@@ -2813,5 +3179,4 @@ def main():
     root.mainloop()
 
 if __name__ == "__main__":
-
     main()
