@@ -1,0 +1,18 @@
+{
+    "name": "Undertale Crossover",
+    "description": "一个 Undertale 联动占位模组：新增主题道具、对话文本与一个占位 NPC（不含官方素材）。\nAn Undertale crossover placeholder mod: adds themed items, dialogues and a placeholder NPC (no official assets).",
+    "author": "FI0m9ySans / mod-scaffold",
+    "version": "0.1",
+    "initial_balance": 500,
+    "initial_materials": { "骨头碎片": 10 },
+    "materials": [
+        { "name":"骨头碎片","cost":1,"unit":"个","is_craftable":false,"materials_required":{},"products_required":{} }
+    ],
+    "products": [
+        { "name":"微笑披风","production_time":60,"sale_price":99,"materials_required":{"骨头碎片":2},"products_required":{},"is_craftable":false }
+    ],
+    "initial_workers": [
+        { "name":"神秘访客","skill_level":3,"salary":0 }
+    ],
+    "crafting_stations": [ {"name":"联动合成台","capacity":2} ]
+}
